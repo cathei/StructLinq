@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickLinq", "QuickLinq\QuickLinq.csproj", "{232FA5E3-467A-47EB-80C9-3477EBAF90CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,18 @@ Global
 		{806CB7C5-190E-4160-B576-F9F6CF8316EC}.Release|x64.Build.0 = Release|x64
 		{806CB7C5-190E-4160-B576-F9F6CF8316EC}.Release|x86.ActiveCfg = Release|x86
 		{806CB7C5-190E-4160-B576-F9F6CF8316EC}.Release|x86.Build.0 = Release|x86
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|x64.Build.0 = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|x64.Build.0 = Release|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{232FA5E3-467A-47EB-80C9-3477EBAF90CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
