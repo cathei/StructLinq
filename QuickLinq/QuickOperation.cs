@@ -4,38 +4,37 @@ using System;
 
 namespace Cathei.QuickLinq
 {
-    public delegate bool MoveNextDelegate<TIteration>(ref TIteration iteration);
-    public delegate void ResetDelegate<TIteration>(ref TIteration iteration);
-
-    public interface IQuickOperation
+    public interface IQuickOperation<TSource, TIteration>
     {
-        MoveNextDelegate<TIteration> GenerateMoveNext<TIteration>();
-        ResetDelegate<TIteration> GenerateReset<TIteration>();
+        // TIteration Create(in TSource source);
+        // bool MoveNext(ref )
+
+
+
+        public delegate TIteration CreateDelegate(in TSource source);
+        public delegate bool MoveNextDelegate(ref TIteration iteration);
+        public delegate void ResetDelegate(ref TIteration iteration);
+
+        CreateDelegate CreateMethod { get; }
+        MoveNextDelegate MoveNextMethod { get; }
+        ResetDelegate ResetMethod { get; }
     }
 
-    internal static class QuickOperation<TOperation>
-        where TOperation : IQuickOperation, new()
-    {
-        public static readonly TOperation Instance;
-
-        static QuickOperation()
-        {
-            Instance = new TOperation();
-        }
-    }
-
-    internal static class QuickOperation<T, TOperation, TIteration>
-        where TOperation : IQuickOperation, new()
-        where TIteration : IQuickIteration<T>
+    internal static class QuickOperation<T, TSource, TIteration>
+        where TIteration : struct, IQuickOperation<TSource, TIteration>, IQuickIteration<T, TSource>
     {
         static QuickOperation()
         {
-            MoveNext = QuickOperation<TOperation>.Instance.GenerateMoveNext<TIteration>();
-            Reset = QuickOperation<TOperation>.Instance.GenerateReset<TIteration>();
+            TIteration value = default;
+
+            Create = value.CreateMethod;
+            MoveNext = value.MoveNextMethod;
+            Reset = value.ResetMethod;
         }
 
-        public static readonly MoveNextDelegate<TIteration> MoveNext;
-        public static readonly ResetDelegate<TIteration> Reset;
+        public static readonly IQuickOperation<TSource, TIteration>.CreateDelegate Create;
+        public static readonly IQuickOperation<TSource, TIteration>.MoveNextDelegate MoveNext;
+        public static readonly IQuickOperation<TSource, TIteration>.ResetDelegate Reset;
 
         //
         //

@@ -6,13 +6,20 @@ using System.Collections.Generic;
 
 namespace Cathei.QuickLinq
 {
-    public struct QuickEnumerable<T, TOperation, TIteration> // : IEnumerable<T>
-        where TOperation : IQuickOperation, new()
-        where TIteration : IQuickIteration<T>
+    public readonly struct QuickEnumerable<T, TSource, TIteration> // : IEnumerable<T>
+        where TSource : struct
+        where TIteration : struct, IQuickOperation<TSource, TIteration>, IQuickIteration<T, TSource>
     {
-        public QuickEnumerator<T, TOperation, TIteration> GetEnumerator()
+        private readonly TSource source;
+
+        public QuickEnumerable(TSource source)
         {
-            return new QuickEnumerator<T, TOperation, TIteration>();
+            this.source = source;
+        }
+
+        public QuickEnumerator<T, TSource, TIteration> GetEnumerator()
+        {
+            return new QuickEnumerator<T, TSource, TIteration>(source);
         }
 
         // IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();

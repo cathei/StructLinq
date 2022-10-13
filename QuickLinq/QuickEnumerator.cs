@@ -6,11 +6,16 @@ using System.Collections.Generic;
 
 namespace Cathei.QuickLinq
 {
-    public struct QuickEnumerator<T, TOperation, TIteration> // : IEnumerator<T>
-        where TOperation : IQuickOperation, new()
-        where TIteration : IQuickIteration<T>
+    public struct QuickEnumerator<T, TSource, TIteration> // : IEnumerator<T>
+        where TSource : struct
+        where TIteration : struct, IQuickOperation<TSource, TIteration>, IQuickIteration<T, TSource>
     {
         private TIteration iteration;
+
+        public QuickEnumerator(in TSource source)
+        {
+            iteration = QuickOperation<T, TSource, TIteration>.Create(source);
+        }
 
         public T Current => iteration.Current;
 
@@ -18,12 +23,12 @@ namespace Cathei.QuickLinq
 
         public bool MoveNext()
         {
-            return QuickOperation<T, TOperation, TIteration>.MoveNext(ref iteration);
+            return QuickOperation<T, TSource, TIteration>.MoveNext(ref iteration);
         }
 
         public void Reset()
         {
-            QuickOperation<T, TOperation, TIteration>.Reset(ref iteration);
+            QuickOperation<T, TSource, TIteration>.Reset(ref iteration);
         }
 
         // I heard implementing Dispose will prevent inlining of foreach?
