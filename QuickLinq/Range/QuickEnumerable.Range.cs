@@ -10,7 +10,7 @@ namespace Cathei.QuickLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static QuickEnumerable<int, RangeSource, RangeIteration> Range(int start, int end)
         {
-            return new QuickEnumerable<int, RangeSource, RangeIteration>(new RangeSource(start, end));
+            return new(new(start, end));
         }
     }
 }

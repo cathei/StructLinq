@@ -1,42 +1,33 @@
 // QuickLinq, Maxwell Keonwoo Kang <code.athei@gmail.com>, 2022
 
+using System.Runtime.CompilerServices;
+
 namespace Cathei.QuickLinq.Range
 {
-    public struct RangeIteration : IQuickOperation<RangeSource, RangeIteration>, IQuickIteration<int, RangeSource>
+    public struct RangeIteration : IQuickOperation<RangeSource, RangeIteration>, IQuickIteration<int>
     {
-        private readonly RangeSource source;
+        private readonly RangeSource range;
         private int value;
 
-        public int Current => value;
-
-        private RangeIteration(in RangeSource source)
+        private RangeIteration(in RangeSource range)
         {
-            this.source = source;
-            value = source.start - 1;
+            this.range = range;
+            value = range.start - 1;
         }
 
-        private static RangeIteration Create(in RangeSource source)
+        public int Current
         {
-            return new RangeIteration(source);
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => value;
         }
 
-        private bool MoveNext(ref RangeIteration iteration)
-        {
-            return ++iteration.value < iteration.source.end;
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RangeIteration Create(in RangeSource source) => new(source);
 
-        private static void Reset(ref RangeIteration iteration)
-        {
-            iteration.value = iteration.source.start - 1;
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext() => ++value < range.end;
 
-        IQuickOperation<RangeSource, RangeIteration>.CreateDelegate IQuickOperation<RangeSource, RangeIteration>.
-            CreateMethod => Create;
-
-        IQuickOperation<RangeSource, RangeIteration>.MoveNextDelegate IQuickOperation<RangeSource, RangeIteration>.
-            MoveNextMethod => MoveNext;
-
-        IQuickOperation<RangeSource, RangeIteration>.ResetDelegate IQuickOperation<RangeSource, RangeIteration>.
-            ResetMethod => Reset;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset() => value = range.start - 1;
     }
 }

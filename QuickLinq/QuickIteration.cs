@@ -4,8 +4,15 @@ using System;
 
 namespace Cathei.QuickLinq
 {
-    public interface IQuickIteration<out T, in TSource>
+    public interface IQuickIteration<out T>
     {
         T Current { get; }
+        bool MoveNext();
+        void Reset();
+    }
+
+    public interface IQuickOperation<TSource, out TIteration>
+    {
+        TIteration Create(in TSource source);
     }
 }

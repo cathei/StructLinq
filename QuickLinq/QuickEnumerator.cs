@@ -3,33 +3,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Cathei.QuickLinq
 {
     public struct QuickEnumerator<T, TSource, TIteration> // : IEnumerator<T>
         where TSource : struct
-        where TIteration : struct, IQuickOperation<TSource, TIteration>, IQuickIteration<T, TSource>
+        where TIteration : struct, IQuickOperation<TSource, TIteration>, IQuickIteration<T>
     {
         private TIteration iteration;
 
         public QuickEnumerator(in TSource source)
         {
-            iteration = QuickOperation<T, TSource, TIteration>.Create(source);
+            iteration = default(TIteration).Create(source);
         }
 
-        public T Current => iteration.Current;
+        public T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => iteration.Current;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext() => iteration.MoveNext();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset() => iteration.Reset();
 
         // object IEnumerator.Current => Current;
-
-        public bool MoveNext()
-        {
-            return QuickOperation<T, TSource, TIteration>.MoveNext(ref iteration);
-        }
-
-        public void Reset()
-        {
-            QuickOperation<T, TSource, TIteration>.Reset(ref iteration);
-        }
 
         // I heard implementing Dispose will prevent inlining of foreach?
         // public void Dispose()
